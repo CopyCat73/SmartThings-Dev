@@ -174,8 +174,8 @@ def take() {
         [callback: cmdResponse]
     )
     hubAction.options = [outputMsgToS3:true]
-    log.debug ("hubaction" + hubAction)
-    hubAction
+    //log.debug ("hubaction" + hubAction)
+    sendHubCommand(hubAction)
 }
 
 

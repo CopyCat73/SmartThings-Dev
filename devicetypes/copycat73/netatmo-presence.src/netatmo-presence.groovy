@@ -21,6 +21,10 @@ metadata {
         capability "Switch"
         
         command "motion"
+        command "human"
+        command "vehicle"
+        command "animal"
+
 
 	}
 
@@ -33,7 +37,10 @@ metadata {
     	section ("Snapshots") {
             input("cameraIP", "text", title: "Local IP for camera", required: true, displayDuringSetup: false, defaultValue: "", description: "The address of the camera in your local network")  
             input("cameraSecret", "text", title: "Access key for camera", required: true, displayDuringSetup: false, defaultValue: "", description: "Key to access the snapshot")
-            input("motionTimeout", "number", title: "Motion times out after how many seconds", required: true, displayDuringSetup: false)  
+            input("motionHumans", "bool", title: "Humans detected count as motion", required: true, displayDuringSetup: false)  
+            input("motionVehicles", "bool", title: "Vehicles detected count as motion", required: true, displayDuringSetup: false)  
+            input("motionAnimals", "bool", title: "Animals detected count as motion", required: true, displayDuringSetup: false)  
+			input("motionTimeout", "number", title: "Motion, human, vehicle and pet detection times out after how many seconds", required: true, displayDuringSetup: false)  
 			input("scheduledTake", "enum", title: "Take a snapshot every:",  options: ["disabled": "No snapshots", "every1Minute" : "Every minute", "every5Minutes" : "Every 5 minutes", "every10Minutes" : "Every 10 minutes", "every15Minutes" : "Every 15 minutes", "every30Minutes" : "Every 30 minutes", "every1Hour" : "Every hour", "Every3Hours" : "every 3 hours"],required: true, displayDuringSetup: false)  
         }
     }    
@@ -51,18 +58,33 @@ metadata {
             state "image", label: "Take", action: "Image Capture.take", icon: "st.camera.dropcam", backgroundColor: "#FFFFFF", nextState:"taking"
         }
        standardTile("motion", "device.motion", width: 1, height: 1, canChangeIcon: false) {
-			state "inactive", label: 'NO MOTION', action: "switch.on", icon: "st.motion.motion.inactive", backgroundColor: "#ffffff", nextState: "toggle"
+			state "inactive", label: 'NO MOTION', action: "", icon: "st.motion.motion.inactive", backgroundColor: "#ffffff", nextState: "toggle"
             state "toggle", label:'toggle', action: "", icon: "st.motion.motion.inactive", backgroundColor: "#ffffff"
-			state "active", label: 'MOTION', action: "switch.off", icon: "st.motion.motion.active", backgroundColor: "#ffffff", nextState: "toggle"            
+			state "active", label: 'MOTION', action: "", icon: "st.motion.motion.active", backgroundColor: "#ffffff", nextState: "toggle"            
 		}
         standardTile("switch", "device.switch", width: 1, height: 1, canChangeIcon: true) {
             state "off", label: '${currentValue}', action: "",
                   icon: "st.switches.switch.off", backgroundColor: "#ffffff"
             state "on", label: '${currentValue}', action: "",
                   icon: "st.switches.switch.on", backgroundColor: "#00a0dc"
-        }                           
+        } 
+       standardTile("human", "device.human", width: 1, height: 1, canChangeIcon: false) {
+			state "inactive", label: 'Human', action: "", icon: "st.Health & Wellness.health12", backgroundColor: "#ffffff", nextState: "toggle"
+            state "toggle", label:'toggle', action: "", icon: "st.Health & Wellness.health12", backgroundColor: "#ffffff"
+			state "active", label: 'DETECTED', action: "switch.off", icon: "st.Health & Wellness.health12", backgroundColor: "#00a0dc", nextState: "toggle"            
+		}
+       standardTile("vehicle", "device.vehicle", width: 1, height: 1, canChangeIcon: false) {
+			state "inactive", label: 'Vehicle', action: "", icon: "st.Transportation.transportation2", backgroundColor: "#ffffff", nextState: "toggle"
+            state "toggle", label:'toggle', action: "", icon: "st.Transportation.transportation2", backgroundColor: "#ffffff"
+			state "active", label: 'DETECTED', action: "", icon: "st.Transportation.transportation2", backgroundColor: "#00a0dc", nextState: "toggle"           
+		}
+       standardTile("animal", "device.animal", width: 1, height: 1, canChangeIcon: false) {
+			state "inactive", label: 'Animal', action: "", icon: "st.Kids.kids20", backgroundColor: "#ffffff", nextState: "toggle"
+            state "toggle", label:'toggle', action: "", icon: "st.Kids.kids20", backgroundColor: "#ffffff"
+			state "active", label: 'DETECTED', action: "", icon: "st.Kids.kids20", backgroundColor: "#00a0dc", nextState: "toggle"        
+		}        
         main "motion"
-        details(["cameraDetails", "take", "motion", "switch"])
+        details(["cameraDetails", "take", "motion", "switch", "human", "vehicle", "animal"])
     }
 }
 
@@ -85,6 +107,7 @@ def parse(String description) {
 private getPictureName() {
     return java.util.UUID.randomUUID().toString().replaceAll('-', '')
 }
+
 
 def updated() {
 	log.debug "updated()"
@@ -128,6 +151,52 @@ def initialize() {
 	}
 }    
 
+def human() {
+
+	sendEvent(name: "human", value: "active")
+    if (motionHumans) {
+    	motion()
+    }
+    if (motionTimeout) {
+    	runIn(motionTimeout, cancelHuman)
+    }
+    else {
+    	debug.log "Motion timeout has not been set in preferences, using 10 second default"
+    	runIn(10, cancelHuman)
+	}
+}
+
+def vehicle() {
+
+	sendEvent(name: "vehicle", value: "active")
+    if (motionVehicles) {
+    	motion()
+    }
+    if (motionTimeout) {
+    	runIn(motionTimeout, cancelVehicle)
+    }
+    else {
+    	debug.log "Motion timeout has not been set in preferences, using 10 second default"
+    	runIn(10, cancelVehicle)
+	}
+}
+
+def animal() {
+
+	sendEvent(name: "animal", value: "active")
+    if (motionAnimals) {
+    	motion()
+    }    
+    if (motionTimeout) {
+    	runIn(motionTimeout, cancelAnimal)
+    }
+    else {
+    	debug.log "Motion timeout has not been set in preferences, using 10 second default"
+    	runIn(10, cancelAnimal)
+	}
+}
+
+
 
 def motion() {
 
@@ -140,6 +209,21 @@ def motion() {
     	debug.log "Motion timeout has not been set in preferences, using 10 second default"
     	runIn(10, cancelMotion)
 	}
+}
+
+def cancelHuman() {
+
+	sendEvent(name: "human", value: "inactive")
+}
+
+def cancelVehicle() {
+
+	sendEvent(name: "vehicle", value: "inactive")
+}
+
+def cancelAnimal() {
+
+	sendEvent(name: "animal", value: "inactive")
 }
 
 def cancelMotion() {
@@ -174,8 +258,8 @@ def take() {
         [callback: cmdResponse]
     )
     hubAction.options = [outputMsgToS3:true]
-    log.debug ("hubaction" + hubAction)
-    hubAction
+    //log.debug ("hubaction" + hubAction)
+    sendHubCommand(hubAction)
 }
 
 
