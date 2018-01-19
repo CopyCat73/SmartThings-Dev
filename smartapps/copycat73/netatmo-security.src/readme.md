@@ -1,6 +1,6 @@
 # Installing the Netatmo security smartapp
 
-https://github.com/CopyCat73/SmartThings/tree/master/smartapps/copycat73/netatmo-security.src
+https://github.com/CopyCat73/SmartThings-Dev/tree/master/smartapps/copycat73/netatmo-security.src
 
 Copyright (c) 2018 Nick Veenstra (https://github.com/copycat73)
 
@@ -17,15 +17,15 @@ Go to https://dev.netatmo.com and sign up for a developer account. Click "create
 
 Create the smartapp by clicking "+ new smartapp" in the SmartThings IDE. Select "from code" and paste the code from:
 
-https://raw.githubusercontent.com/CopyCat73/SmartThings/master/smartapps/copycat73/netatmo-security.src/netatmo-security.groovy
+https://raw.githubusercontent.com/CopyCat73/SmartThings-Dev/master/smartapps/copycat73/netatmo-security.src/netatmo-security.groovy
 
 Create the Device Type Handlers in the same way:
 
-Netatmo Person: https://raw.githubusercontent.com/CopyCat73/SmartThings/master/devicetypes/copycat73/netatmo-person.src/netatmo-person.groovy
+Netatmo Person: https://raw.githubusercontent.com/CopyCat73/SmartThings-Dev/master/devicetypes/copycat73/netatmo-person.src/netatmo-person.groovy
 
-Netatmo Welcome: https://raw.githubusercontent.com/CopyCat73/SmartThings/master/devicetypes/copycat73/netatmo-welcome.src/netatmo-welcome.groovy
+Netatmo Welcome: https://raw.githubusercontent.com/CopyCat73/SmartThings-Dev/master/devicetypes/copycat73/netatmo-welcome.src/netatmo-welcome.groovy
 
-Netatmo Presence: https://raw.githubusercontent.com/CopyCat73/SmartThings/master/devicetypes/copycat73/netatmo-presence.src/netatmo-presence.groovy
+Netatmo Presence: https://raw.githubusercontent.com/CopyCat73/SmartThings-Dev/master/devicetypes/copycat73/netatmo-presence.src/netatmo-presence.groovy
 
 Make sure to publish each item after it is created. 
 
