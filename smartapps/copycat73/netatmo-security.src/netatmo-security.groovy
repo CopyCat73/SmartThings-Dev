@@ -397,11 +397,11 @@ def initialize() {
 			switch(detail?.type) {
 				case 'NOC':
 					log.debug "Creating Presence camera ${detail.name}"
-					createChildDevice("Netatmo Presence", deviceId, detail.name, detail.name)
+					createChildDevice("Netatmo Presence", deviceId, deviceId, detail.name)
   					break
 				case 'NACamera':
 					log.debug "Creating Welcome camera ${detail.name}"
-					createChildDevice("Netatmo Welcome", deviceId, detail.name, detail.name)
+					createChildDevice("Netatmo Welcome", deviceId, deviceId, detail.name)
   					break
 			}
 		} catch (Exception e) {
@@ -415,7 +415,7 @@ def initialize() {
         
         try {
 				log.debug "Creating Person ${detail.name}"
-				createChildDevice("Netatmo Person", personId, detail.name, detail.name)
+				createChildDevice("Netatmo Person", personId, personId, detail.name)
 		} 
         catch (Exception e) {
 			log.error "Error creating device: ${e}"
@@ -553,17 +553,18 @@ def webhook() {
     11:49:04 PM: debug [message:name seen by Voorkamer, event_type:person, app_type:app_camera, event_id:*****, camera_id:70:***mac, home_name:Thuis, user_id:*****, persons:[[id:*****, face_key:****, is_known:true, face_id:****]], home_id:****]
    	11:48:25 PM: debug [message:Person seen by Achterdeur, snapshot_key:****, event_type:human, app_type:app_camera, event_id:*****, camera_id:***mac, home_name:Thuis, user_id:****, snapshot_id:***, home_id:****]
     11:48:13 PM: debug [message:Motion detected by Achterkamer, snapshot_key:*******, event_type:movement, app_type:app_camera, event_id:***, camera_id:***mac, home_name:Thuis, user_id:****, snapshot_id:****, home_id:****]
-    
-    
+    message:Person seen by Voordeur, snapshot_key:d***, event_type:human, app_type:app_camera, event_id:**, camera_id:****, home_name:Thuis, user_id:**, 
+    Car seen by Voordeur, snapshot_key:** event_type:vehicle, app_type:app_camera, event_id:***, camera_id:7***, home_name:Thuis, user_id:***, snapshot_id:***, home_id:***
     */
     def jsonSlurper = new groovy.json.JsonSlurper()
 	def messageJSON = request.JSON
-    //log.debug "$messageJSON"
+    log.debug "$messageJSON"
     log.debug "Webhook message: ${messageJSON.message}"
     
     def children = getChildDevices()
+    
     def cameraID = messageJSON.camera_id
-    def child = children?.find { it.deviceNetworkId == cameraID }
+    def child = children?.find { it.name == cameraID }
     if (!child) {
     	log.debug "Cant deliver event: no child device active for camera $cameraID"
     }
@@ -575,15 +576,15 @@ def webhook() {
                 break
             case 'human':
                 log.debug "Human detected (presence)"
-                //createChildDevice("Netatmo Welcome", deviceId, detail.name, detail.name)
+                 child?.human()
                  break
             case 'vehicle':
                 log.debug "Car detected (presence)"
-                //createChildDevice("Netatmo Welcome", deviceId, detail.name, detail.name)
+                 child?.vehicle()
                  break
             case 'animal':
                 log.debug "Animal detected (presence)"
-                //createChildDevice("Netatmo Welcome", deviceId, detail.name, detail.name)
+                 child?.animal()
                  break
             case 'movement':
                 log.debug "Movement detected sending event to $child"
