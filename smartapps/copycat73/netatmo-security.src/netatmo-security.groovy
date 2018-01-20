@@ -555,6 +555,7 @@ def webhook() {
     11:48:13 PM: debug [message:Motion detected by Achterkamer, snapshot_key:*******, event_type:movement, app_type:app_camera, event_id:***, camera_id:***mac, home_name:Thuis, user_id:****, snapshot_id:****, home_id:****]
     message:Person seen by Voordeur, snapshot_key:d***, event_type:human, app_type:app_camera, event_id:**, camera_id:****, home_name:Thuis, user_id:**, 
     Car seen by Voordeur, snapshot_key:** event_type:vehicle, app_type:app_camera, event_id:***, camera_id:7***, home_name:Thuis, user_id:***, snapshot_id:***, home_id:***
+    message:Voordeur: monitoring suspended, event_type:off, app_type:app_camera, event_id:***, camera_id:***, home_name:Thuis, user_id:**, home_id:**]
     */
     def jsonSlurper = new groovy.json.JsonSlurper()
 	def messageJSON = request.JSON
@@ -570,7 +571,15 @@ def webhook() {
     }
     else {
         switch (messageJSON.event_type) {
-            case 'person':
+            case 'on':
+                log.debug "Camera switched on"
+                child?.on()
+                break
+            case 'off':
+                log.debug "Camera switched off"
+                child?.off()
+                break                
+			case 'person':
                 log.debug "Person detected (welcome)"
                 child?.seen()
                 break
