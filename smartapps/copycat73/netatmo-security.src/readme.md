@@ -47,11 +47,11 @@ In the preferences for each camera, there is a local ip and access key setting. 
 
 Copy the "somelongstring" part (so the first bit after the ip address) and paste it into the device preference "camera secret" via the IDE (this would be hard to to in the app). Now you need to find the actual ip address for your camera(s), for instance via your router. Enter that ip address in the "camera ip" setting. Keep in mind that the Welcome cameras can be connected via cable or wireless so they have 2 mac addresses. The Netatmo dev try it module shows the cable mac address as the device id. 
 
-You should now be able to go into the camera in your app and take a snapshot from the camera.
+You should now be able to go into an installed camera in the smartthings app and take a snapshot from the camera.
 
 ## Polling and webhook
 
-The SmartApp polls the Netatmo sever every 5 minutes to check the camera properties (currently only to see if it's on) and the presence for each person. In each camera there is also a preference to setup a snapshot to be taken at each poll (around 5 minutes). 
+The SmartApp polls the Netatmo server every 5 minutes to check the camera properties (currently only to see if it's on) and the presence for each person. In each camera there is also a preference to setup a snapshot to be taken at each poll (around 5 minutes). 
 
 In the SmartApp preferences it is also possible to activate a webhook. The webhook enables the Netatmo server to talk back to the SmartThings hub, this has the advantage to receive motion and person alerts. To set this up, enable the webhook. Then go into your Netatmo security app and make sure that notification works as you want. E.g. if you've setup "be notified of motion detection" and "only when nobody is home" and the camera(s) have noticed you are home, no motion will be reported. 
 
