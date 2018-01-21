@@ -51,7 +51,7 @@ You should now be able to go into an installed camera in the smartthings app and
 
 ## Polling and webhook
 
-The SmartApp polls the Netatmo server every 5 minutes to check the camera properties (currently only to see if it's on) and the presence for each person. In each camera there is also a preference to setup a snapshot to be taken at each poll (around 5 minutes). 
+The SmartApp polls the Netatmo server every 5 minutes to check the camera properties (currently only to see if it's on) and the presence for each person. 
 
 In the SmartApp preferences it is also possible to activate a webhook. The webhook enables the Netatmo server to talk back to the SmartThings hub, this has the advantage to receive motion and person alerts. To set this up, enable the webhook. Then go into your Netatmo security app and make sure that notification works as you want. E.g. if you've setup "be notified of motion detection" and "only when nobody is home" and the camera(s) have noticed you are home, no motion will be reported. 
 
