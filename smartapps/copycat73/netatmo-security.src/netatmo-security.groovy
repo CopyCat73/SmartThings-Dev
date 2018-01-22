@@ -23,7 +23,7 @@ private getVendorName()		{ "netatmo" }
 private getVendorAuthPath()	{ "${apiUrl}/oauth2/authorize?" }
 private getVendorTokenPath(){ "${apiUrl}/oauth2/token" }
 private getVendorIcon()		{ "https://s3.amazonaws.com/smartapp-icons/Partner/netamo-icon-1%402x.png" }
-private getScope()			{ "read_camera read_presence" }
+private getScope()			{ "read_camera read_presence write_camera" }
 private getClientId()		{ appSettings.clientId }
 private getClientSecret()	{ appSettings.clientSecret }
 private getServerUrl() 		{ appSettings.serverUrl }
@@ -397,11 +397,11 @@ def initialize() {
 			switch(detail?.type) {
 				case 'NOC':
 					log.debug "Creating Presence camera ${detail.name}"
-					createChildDevice("Netatmo Presence", deviceId, deviceId, detail.name)
+					createChildDevice("Netatmo Presence", deviceId, deviceId, detail.name, detail.homeID, detail.homeName)
   					break
 				case 'NACamera':
 					log.debug "Creating Welcome camera ${detail.name}"
-					createChildDevice("Netatmo Welcome", deviceId, deviceId, detail.name)
+					createChildDevice("Netatmo Welcome", deviceId, deviceId, detail.name, detail.homeID, detail.homeName)
   					break
 			}
 		} catch (Exception e) {
@@ -415,7 +415,7 @@ def initialize() {
         
         try {
 				log.debug "Creating Person ${detail.name}"
-				createChildDevice("Netatmo Person", personId, personId, detail.name)
+				createChildDevice("Netatmo Person", personId, personId, detail.name, detail.homeID, detail.homeName)
 		} 
         catch (Exception e) {
 			log.error "Error creating device: ${e}"
@@ -471,8 +471,10 @@ def getDeviceAndPersonList() {
                         def key = camera.id //.replace(':','').toUpperCase()
                         def cameraName = "${camera.name} (${home.name})"
                         deviceList[key] = "${camera.name} (${home.name})"
-                        state.deviceDetail[key] =  ["name" :cameraName]
-                        state.deviceDetail[key] << ["type" :camera.type]
+                        state.deviceDetail[key] =  ["name" : cameraName]
+                        state.deviceDetail[key] << ["type" : camera.type]
+                        state.deviceDetail[key] << ["homeID" : home.id]
+                        state.deviceDetail[key] << ["homeName" : home.name]
                         state.deviceState[key] = ["sd_status": camera.sd_status]
                         state.deviceState[key] << ["status": camera.status]
                         state.deviceState[key] << ["alim_status": camera.alim_status]
@@ -483,6 +485,8 @@ def getDeviceAndPersonList() {
                             def personName = person.pseudo
                             personList[key] = personName
                             state.personDetail[key] =  ["name" : personName]
+							state.personDetail[key] << ["homeID" : home.id]
+                            state.personDetail[key] << ["homeName" : home.name]
                             state.personDetail[key] <<  ["last_seen" : person.last_seen]
                             state.personDetail[key] << ["out_of_sight" : person.out_of_sight]
                         } 
@@ -506,7 +510,7 @@ private removeChildDevices(delete) {
 	}
 }
 
-def createChildDevice(deviceFile, dni, name, label) {
+def createChildDevice(deviceFile, dni, name, label, homeID, homeName) {
 	log.debug "In createChildDevice"
     
     def hub = location.hubs[0]
@@ -516,6 +520,7 @@ def createChildDevice(deviceFile, dni, name, label) {
 		if(!existingDevice) {
 			log.debug "Creating child"
 			def childDevice = addChildDevice("copycat73", deviceFile, dni, hub.id, [name: name, label: label, completedSetup: true])
+            childDevice.setHome(homeID,homeName)
 		} else {
 			log.debug "Device $dni already exists"
 		}
@@ -609,6 +614,29 @@ def webhook() {
     resp << [name: "result" , value: "ok"]
  
     return resp
+}
+
+def setAway(homeID, personID) {
+	log.debug "setting away ${homeID} ${personID}"
+    
+    def query = ["home_id": homeID] 
+    if (personID) {
+    	query <<["person_id": personID]
+    }
+  
+    apiGet("/api/setpersonsaway",query) { resp ->
+    		if (resp) {
+            	if (resp.data.status == "ok") {
+                	log.debug "Away command succesful"
+            	}
+            }
+            
+	}
+}
+
+def setAway(homeID) {
+	log.debug "setting away ${homeID}"
+    setAway(homeID, null)
 }
 
 def addWebhook() {
