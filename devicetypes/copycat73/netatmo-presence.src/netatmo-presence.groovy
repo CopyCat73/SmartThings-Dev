@@ -24,6 +24,7 @@ metadata {
         command "human"
         command "vehicle"
         command "animal"
+       	attribute "homeName", "string"
 
 
 	}
@@ -82,9 +83,12 @@ metadata {
 			state "inactive", label: 'Animal', action: "", icon: "st.Kids.kids20", backgroundColor: "#ffffff", nextState: "toggle"
             state "toggle", label:'toggle', action: "", icon: "st.Kids.kids20", backgroundColor: "#ffffff"
 			state "active", label: 'DETECTED', action: "", icon: "st.Kids.kids20", backgroundColor: "#00a0dc", nextState: "toggle"        
-		}        
+		}   
+        standardTile("homeName", "device.homeName", width: 1, height: 1, canChangeIcon: false, inactiveLabel: true, canChangeBackground: false) {
+            state "homeName", label: '${currentValue}', action: "", icon: "st.Home.home2", backgroundColor: "#FFFFFF"
+        }            
         main "motion"
-        details(["cameraDetails", "take", "motion", "switch", "human", "vehicle", "animal"])
+        details(["cameraDetails", "take", "motion", "switch", "human", "vehicle", "animal","homeName"])
     }
 }
 
@@ -149,7 +153,12 @@ def initialize() {
              	break
 		}
 	}
-}    
+}   
+
+def setHome(homeID,homeName) {
+	state.homeID = homeID
+    sendEvent(name: "homeName", value: homeName)
+}
 
 def human() {
 

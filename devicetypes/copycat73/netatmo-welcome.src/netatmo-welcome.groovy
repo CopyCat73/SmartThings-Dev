@@ -21,6 +21,8 @@ metadata {
         capability "Switch"
         
         command "motion"
+		command "setAway"
+        attribute "homeName", "string"
 
 	}
 
@@ -51,18 +53,24 @@ metadata {
             state "image", label: "Take", action: "Image Capture.take", icon: "st.camera.dropcam", backgroundColor: "#FFFFFF", nextState:"taking"
         }
        standardTile("motion", "device.motion", width: 1, height: 1, canChangeIcon: false) {
-			state "inactive", label: 'NO MOTION', action: "switch.on", icon: "st.motion.motion.inactive", backgroundColor: "#ffffff", nextState: "toggle"
+			state "inactive", label: 'NO MOTION', action: "", icon: "st.motion.motion.inactive", backgroundColor: "#ffffff", nextState: "toggle"
             state "toggle", label:'toggle', action: "", icon: "st.motion.motion.inactive", backgroundColor: "#ffffff"
-			state "active", label: 'MOTION', action: "switch.off", icon: "st.motion.motion.active", backgroundColor: "#ffffff", nextState: "toggle"            
+			state "active", label: 'MOTION', action: "", icon: "st.motion.motion.active", backgroundColor: "#ffffff", nextState: "toggle"            
 		}
         standardTile("switch", "device.switch", width: 1, height: 1, canChangeIcon: true) {
             state "off", label: '${currentValue}', action: "",
                   icon: "st.switches.switch.off", backgroundColor: "#ffffff"
             state "on", label: '${currentValue}', action: "",
                   icon: "st.switches.switch.on", backgroundColor: "#00a0dc"
-        }                           
+        } 
+        standardTile("homeName", "device.homeName", width: 1, height: 1, canChangeIcon: false, inactiveLabel: true, canChangeBackground: false) {
+            state "homeName", label: '${currentValue}', action: "", icon: "st.Home.home2", backgroundColor: "#FFFFFF"
+        }        
+       standardTile("setAway", "device.setAway", width: 1, height: 1, canChangeIcon: false, inactiveLabel: true, canChangeBackground: false) {
+            state "setAway", label: 'Set everyone away', action: "setAway", icon: "st.Home.home3", backgroundColor: "#FFFFFF"
+        }           
         main "motion"
-        details(["cameraDetails", "take", "motion", "switch"])
+        details(["cameraDetails", "take", "motion", "switch","homeName","setAway"])
     }
 }
 
@@ -126,7 +134,17 @@ def initialize() {
              	break
 		}
 	}
-}    
+}
+
+def setHome(homeID,homeName) {
+	state.homeID = homeID
+    sendEvent(name: "homeName", value: homeName)
+}
+
+def setAway() {
+	parent.setAway(state.homeID)
+}
+
 
 def on() {
 
