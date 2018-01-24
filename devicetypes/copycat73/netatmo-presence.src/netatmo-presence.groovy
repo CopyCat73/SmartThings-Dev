@@ -164,7 +164,7 @@ def human() {
     	startTimer(motionTimeout, cancelHuman)
     }
     else {
-    	debug.log "Motion timeout has not been set in preferences, using 10 second default"
+    	log.debug "Motion timeout has not been set in preferences, using 10 second default"
     	startTimer(10, cancelHuman)
 	}
 }
@@ -179,7 +179,7 @@ def vehicle() {
     	startTimer(motionTimeout, cancelVehicle)
     }
     else {
-    	debug.log "Motion timeout has not been set in preferences, using 10 second default"
+    	log.debug "Motion timeout has not been set in preferences, using 10 second default"
     	startTimer(10, cancelVehicle)
 	}
 }
@@ -194,7 +194,7 @@ def animal() {
     	startTimer(motionTimeout, cancelAnimal)
     }
     else {
-    	debug.log "Motion timeout has not been set in preferences, using 10 second default"
+    	log.debug "Motion timeout has not been set in preferences, using 10 second default"
     	startTimer(10, cancelAnimal)
 	}
 }
@@ -217,7 +217,7 @@ def motion() {
     	startTimer(motionTimeout, cancelMotion)
     }
     else {
-    	debug.log "Motion timeout has not been set in preferences, using 10 second default"
+    	log.debug "Motion timeout has not been set in preferences, using 10 second default"
     	startTimer(10, cancelMotion)
 	}
 }

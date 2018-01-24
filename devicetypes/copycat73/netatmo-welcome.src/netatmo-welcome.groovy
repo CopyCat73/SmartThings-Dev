@@ -163,7 +163,7 @@ def motion() {
     	startTimer(motionTimeout, cancelMotion)
     }
     else {
-    	debug.log "Motion timeout has not been set in preferences, using 10 second default"
+    	log.debug "Motion timeout has not been set in preferences, using 10 second default"
     	startTimer(10, cancelMotion)
 	}
 }
