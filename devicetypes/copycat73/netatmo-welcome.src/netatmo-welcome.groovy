@@ -53,9 +53,8 @@ metadata {
             state "image", label: "Take", action: "Image Capture.take", icon: "st.camera.dropcam", backgroundColor: "#FFFFFF", nextState:"taking"
         }
        standardTile("motion", "device.motion", width: 1, height: 1, canChangeIcon: false) {
-			state "inactive", label: 'NO MOTION', action: "", icon: "st.motion.motion.inactive", backgroundColor: "#ffffff", nextState: "toggle"
-            state "toggle", label:'toggle', action: "", icon: "st.motion.motion.inactive", backgroundColor: "#ffffff"
-			state "active", label: 'MOTION', action: "", icon: "st.motion.motion.active", backgroundColor: "#ffffff", nextState: "toggle"            
+			state "inactive", label: 'NO MOTION', action: "", icon: "st.motion.motion.inactive", backgroundColor: "#ffffff"
+    		state "active", label: 'MOTION', action: "", icon: "st.motion.motion.active", backgroundColor: "#ffffff"           
 		}
         standardTile("switch", "device.switch", width: 1, height: 1, canChangeIcon: true) {
             state "off", label: '${currentValue}', action: "",
@@ -161,17 +160,23 @@ def motion() {
 	sendEvent(name: "motion", value: "active")
     
     if (motionTimeout) {
-    	runIn(motionTimeout, cancelMotion)
+    	startTimer(motionTimeout, cancelMotion)
     }
     else {
     	debug.log "Motion timeout has not been set in preferences, using 10 second default"
-    	runIn(10, cancelMotion)
+    	startTimer(10, cancelMotion)
 	}
 }
 
 def cancelMotion() {
 
 	sendEvent(name: "motion", value: "inactive")
+}
+
+def startTimer(seconds, function) {
+    def now = new Date()
+	def runTime = new Date(now.getTime() + (seconds * 1000))
+	runOnce(runTime, function) // runIn isn't reliable, use runOnce instead
 }
 
 def take() {

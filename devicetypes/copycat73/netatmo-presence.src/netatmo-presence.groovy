@@ -59,30 +59,24 @@ metadata {
             state "image", label: "Take", action: "Image Capture.take", icon: "st.camera.dropcam", backgroundColor: "#FFFFFF", nextState:"taking"
         }
        standardTile("motion", "device.motion", width: 1, height: 1, canChangeIcon: false) {
-			state "inactive", label: 'NO MOTION', action: "", icon: "st.motion.motion.inactive", backgroundColor: "#ffffff", nextState: "toggle"
-            state "toggle", label:'toggle', action: "", icon: "st.motion.motion.inactive", backgroundColor: "#ffffff"
-			state "active", label: 'MOTION', action: "", icon: "st.motion.motion.active", backgroundColor: "#ffffff", nextState: "toggle"            
+			state "inactive", label: 'NO MOTION', action: "", icon: "st.motion.motion.inactive", backgroundColor: "#ffffff"
+    		state "active", label: 'MOTION', action: "", icon: "st.motion.motion.active", backgroundColor: "#ffffff"           
 		}
         standardTile("switch", "device.switch", width: 1, height: 1, canChangeIcon: true) {
-            state "off", label: '${currentValue}', action: "",
-                  icon: "st.switches.switch.off", backgroundColor: "#ffffff"
-            state "on", label: '${currentValue}', action: "",
-                  icon: "st.switches.switch.on", backgroundColor: "#00a0dc"
+            state "off", label: '${currentValue}', action: "", icon: "st.switches.switch.off", backgroundColor: "#ffffff"
+            state "on", label: '${currentValue}', action: "", icon: "st.switches.switch.on", backgroundColor: "#00a0dc"
         } 
        standardTile("human", "device.human", width: 1, height: 1, canChangeIcon: false) {
-			state "inactive", label: 'Human', action: "", icon: "st.Health & Wellness.health12", backgroundColor: "#ffffff", nextState: "toggle"
-            state "toggle", label:'toggle', action: "", icon: "st.Health & Wellness.health12", backgroundColor: "#ffffff"
-			state "active", label: 'DETECTED', action: "switch.off", icon: "st.Health & Wellness.health12", backgroundColor: "#00a0dc", nextState: "toggle"            
+			state "inactive", label: 'Human', action: "", icon: "st.Health & Wellness.health12", backgroundColor: "#ffffff"
+  			state "active", label: 'DETECTED', action: "", icon: "st.Health & Wellness.health12", backgroundColor: "#00a0dc"            
 		}
        standardTile("vehicle", "device.vehicle", width: 1, height: 1, canChangeIcon: false) {
-			state "inactive", label: 'Vehicle', action: "", icon: "st.Transportation.transportation2", backgroundColor: "#ffffff", nextState: "toggle"
-            state "toggle", label:'toggle', action: "", icon: "st.Transportation.transportation2", backgroundColor: "#ffffff"
-			state "active", label: 'DETECTED', action: "", icon: "st.Transportation.transportation2", backgroundColor: "#00a0dc", nextState: "toggle"           
+			state "inactive", label: 'Vehicle', action: "", icon: "st.Transportation.transportation2", backgroundColor: "#ffffff"
+     		state "active", label: 'DETECTED', action: "", icon: "st.Transportation.transportation2", backgroundColor: "#00a0dc"           
 		}
        standardTile("animal", "device.animal", width: 1, height: 1, canChangeIcon: false) {
-			state "inactive", label: 'Animal', action: "", icon: "st.Kids.kids20", backgroundColor: "#ffffff", nextState: "toggle"
-            state "toggle", label:'toggle', action: "", icon: "st.Kids.kids20", backgroundColor: "#ffffff"
-			state "active", label: 'DETECTED', action: "", icon: "st.Kids.kids20", backgroundColor: "#00a0dc", nextState: "toggle"        
+			state "inactive", label: 'Animal', action: "", icon: "st.Kids.kids20", backgroundColor: "#ffffff"
+      		state "active", label: 'DETECTED', action: "", icon: "st.Kids.kids20", backgroundColor: "#00a0dc"        
 		}   
         standardTile("homeName", "device.homeName", width: 1, height: 1, canChangeIcon: false, inactiveLabel: true, canChangeBackground: false) {
             state "homeName", label: '${currentValue}', action: "", icon: "st.Home.home2", backgroundColor: "#FFFFFF"
@@ -167,11 +161,11 @@ def human() {
     	motion()
     }
     if (motionTimeout) {
-    	runIn(motionTimeout, cancelHuman)
+    	startTimer(motionTimeout, cancelHuman)
     }
     else {
     	debug.log "Motion timeout has not been set in preferences, using 10 second default"
-    	runIn(10, cancelHuman)
+    	startTimer(10, cancelHuman)
 	}
 }
 
@@ -182,11 +176,11 @@ def vehicle() {
     	motion()
     }
     if (motionTimeout) {
-    	runIn(motionTimeout, cancelVehicle)
+    	startTimer(motionTimeout, cancelVehicle)
     }
     else {
     	debug.log "Motion timeout has not been set in preferences, using 10 second default"
-    	runIn(10, cancelVehicle)
+    	startTimer(10, cancelVehicle)
 	}
 }
 
@@ -197,11 +191,11 @@ def animal() {
     	motion()
     }    
     if (motionTimeout) {
-    	runIn(motionTimeout, cancelAnimal)
+    	startTimer(motionTimeout, cancelAnimal)
     }
     else {
     	debug.log "Motion timeout has not been set in preferences, using 10 second default"
-    	runIn(10, cancelAnimal)
+    	startTimer(10, cancelAnimal)
 	}
 }
 
@@ -220,11 +214,11 @@ def motion() {
 	sendEvent(name: "motion", value: "active")
     
     if (motionTimeout) {
-    	runIn(motionTimeout, cancelMotion)
+    	startTimer(motionTimeout, cancelMotion)
     }
     else {
     	debug.log "Motion timeout has not been set in preferences, using 10 second default"
-    	runIn(10, cancelMotion)
+    	startTimer(10, cancelMotion)
 	}
 }
 
@@ -248,9 +242,16 @@ def cancelMotion() {
 	sendEvent(name: "motion", value: "inactive")
 }
 
+def startTimer(seconds, function) {
+    def now = new Date()
+	def runTime = new Date(now.getTime() + (seconds * 1000))
+	runOnce(runTime, function) // runIn isn't reliable, use runOnce instead
+}
+
 def take() {
 	if (cameraSecret == null || cameraIP == null) {
-    	showAlert("Please set camera ip and secret in preferences first","Missing preferences","Secret + IP") 
+    	showAlert("Please set camera ip and secret in preferences first","Missing preferences","Secret + IP")
+        sendEvent(name: "take", value: "take")
         return
 	}
     log.debug("Taking Photo")
