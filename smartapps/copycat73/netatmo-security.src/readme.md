@@ -58,7 +58,7 @@ Enable oAuth and under the app settings provide the client id and secret you rec
 
 In the SmartThings app, go to Automation, SmartApps. Click "+ add a SmartApp" and into "My Apps". Netatmo Security should be listed there:
 
-![app1](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_1.png | width=300)
+<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_1.png" width="200">
 
 Open it and click "Connect to Netatmo". You will be prompted by a Netatmo login. Use your developer account to log in and give permission to access the welcome and presence scope by clicking "yes". Tap "done" to continue. The screen will now confirm that Netatmo is connected to SmartThings.
 
