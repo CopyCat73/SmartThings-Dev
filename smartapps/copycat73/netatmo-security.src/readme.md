@@ -102,15 +102,21 @@ You should now see devices (present and welcome) and people show up as devices, 
 <table>
  
  A presence camera:
+ 
 <img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_14.png" width="200">
+
 From top left to bottom right: a "take" button for snapshots, motion indicator, camera on/off indicator, human detected, car detected, pet detected, home name. 
 
 A welcome camera:
+
 <img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_15.png" width="200">
+
 From top left to bottom right: a "take" button for snapshots, motion indicator, camera on/off indicator, home name, mark everyone as being away. 
 
 A person presence device:
+
 <img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_16.png" width="200">
+
 From top left to bottom right: presence indicator, home name, mark this person as being away.
 
 Note that for the camera's theres no images yet. Now comes the hard part.
@@ -137,13 +143,14 @@ In a separate browser tab go to https://dev.netatmo.com and sign in.At the top o
 To the right click the arrow at "Try this method by yourself with our TRY IT module.". Then click "try it". You will see a server response, expand the result to "body > homes > cameras". 
 
 ![gethomedata_2](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/gethomedata_2.png)
+
 ![gethomedata_3](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/gethomedata_3.png)
 
 Expand each camera and look at the "name" property to find the ones you installed in SmartThings. There should be a property "vpn_url" that looks something like "https://v1.netatmo.net/restricted/someip/somelongstring/anotherlongstring".
 
 ![gethomedata_4](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/gethomedata_4.png)
 
-Copy the red underlined part (so the first bit after the ip address, watch the slashes!) and paste it into the device preference "camera secret" via the IDE (this would be hard to to in the app). 
+Copy the red underlined part (so the first bit after the ip address, watch the slashes!) and paste it into the device preference "access key for camera" via the IDE (this would be hard to to in the app). 
 
 ![deviceprefs3](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/device_prefs_3.png)
 
@@ -166,9 +173,11 @@ Please note that Netatmo is very strict about the webhook. If there are 5 failed
 Both camera type preferences have a setting for the ip address and secret. Since the webhook does not report when motion ends, you need to specify the timeout in the preferences for both camera types. Both types can also be setup to take a snapshot at certain intervals. The presence camera also has the option to link human, pet or car detection to the motion detector, so you could say that a car passing by also counts as motion.
 
 Welcome camera preferences:
+
 <img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_18.png" width="200">
 
 Presence camera preferences:
+
 <img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_19.png" width="200">
 
 
