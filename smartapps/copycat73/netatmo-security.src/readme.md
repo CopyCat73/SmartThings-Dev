@@ -48,7 +48,7 @@ Make sure to publish each item after it is created.
 
 Go into the SmartApps section of your IDE and click on "edit properties" for the Netatmo Security app. 
 
-![edit properties](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/netatmo_edit_properties.png)
+<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/netatmo_edit_properties.png" width="300">
 
 Enable oAuth and under the app settings provide the client id and secret you received for your Netatmo Development app. Also make sure to enter the correct server url for the shard your hub is on, e.g. https://graph-eu01-euwest1.api.smartthings.com. Don't put a trailing slash at the end. 
 
@@ -154,7 +154,7 @@ Copy the red underlined part (so the first bit after the ip address, watch the s
 
 ![deviceprefs3](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/device_prefs_3.png)
 
-Now you need to find the actual ip address for your camera(s), for instance via your router. Enter that ip address in the "camera ip" setting as seen above.
+Now you need to find the actual ip address for your camera(s), for instance via your router. Enter that ip address in the "camera ip" setting as seen above. Enter in the form of "192.168.X.X". They must be in your local network, don't prepend "http://".
 
 Keep in mind that the Welcome cameras can be connected via cable or wireless so they have 2 mac addresses. The Netatmo dev try it module shows the cable mac address as the device id. 
 
