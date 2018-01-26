@@ -11,11 +11,18 @@ This smartapp supports Netatmo Welcome and Presence devices for motion detection
 
 ## Set up a Netatmo developer account
 
-Go to https://dev.netatmo.com and sign up for a developer account. Click "create your app" to install a new application, and give it a name that references smartthings so you know what it's for later on. You should now have a client id and client secret. 
+Go to https://dev.netatmo.com and sign up for a developer account. Click "create your app" to install a new application, and give it a name that references smartthings so you know what it's for later on. 
+
+
+
+You should now have a client id and client secret. 
 
 ## Install the code
 
-Create the smartapp by clicking "+ new smartapp" in the SmartThings IDE. Select "from code" and paste the code from:
+Create the smartapp by clicking "+ new smartapp" in the SmartThings IDE. 
+![new smartapp](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/new_smartapp.png)
+
+Select "from code" and paste the code from:
 
 https://raw.githubusercontent.com/CopyCat73/SmartThings-Dev/master/smartapps/copycat73/netatmo-security.src/netatmo-security.groovy
 
