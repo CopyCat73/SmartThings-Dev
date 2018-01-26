@@ -13,16 +13,24 @@ This smartapp supports Netatmo Welcome and Presence devices for motion detection
 
 Go to https://dev.netatmo.com and sign up for a developer account. Click "create your app" to install a new application, and give it a name that references smartthings so you know what it's for later on. 
 
+![netatmo app](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/netatmo_app.png)
 
+You should now have a client id and client secret:
 
-You should now have a client id and client secret. 
+![netatmo secret](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/netatmo_secret.png)
+
 
 ## Install the code
 
 Create the smartapp by clicking "+ new smartapp" in the SmartThings IDE. 
+
 ![new smartapp](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/new_smartapp.png)
 
-Select "from code" and paste the code from:
+Select "from code": 
+
+![new smartapp](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/new_smartapp_code.png)
+
+and paste the code from:
 
 https://raw.githubusercontent.com/CopyCat73/SmartThings-Dev/master/smartapps/copycat73/netatmo-security.src/netatmo-security.groovy
 
@@ -38,19 +46,69 @@ Make sure to publish each item after it is created.
 
 ## Initial settings
 
-Go into the SmartApps section of your IDE and click on "edit properties" for the Netatmo Security app. Enable oAuth and under the app settings provide the client id and secret for your Netatmo Development app. Also make sure to enter the correct server shard your hub is on, e.g. https://graph-eu01-euwest1.api.smartthings.com. Don't put a trailing slash at the end. 
+Go into the SmartApps section of your IDE and click on "edit properties" for the Netatmo Security app. 
+
+![edit properties](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/netatmo_edit_properties.png)
+
+Enable oAuth and under the app settings provide the client id and secret for your Netatmo Development app. Also make sure to enter the correct server shard your hub is on, e.g. https://graph-eu01-euwest1.api.smartthings.com. Don't put a trailing slash at the end. 
+
+![edit app settings](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/smartapp_settings.png)
 
 ## Install the SmartApp
 
-In the SmartThings app, go to Automation, SmartApps. Click "+ add a SmartApp" and into "My Apps". Netatmo Security should be listed there. Open it and click "Connect to Netatmo". You will be prompted by a Netatmo login. Use your developer account to log in and give permission to access the welcome and presence scope by clicking "yes". Tap "done" to continue. The screen will now confirm that Netatmo is connected to SmartThings.
+In the SmartThings app, go to Automation, SmartApps. Click "+ add a SmartApp" and into "My Apps". Netatmo Security should be listed there:
 
-Click Next. Do not enter any settings yet and click Save (theres a bug here I need to solve you might get a save error when you start setting up preferences now). A popup should say "Successfully added Netatmo Security".
+![app1](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_1.png)
 
-Go back into the SmartApp, click next to enter the preferences and add the devices and people you want to have monitored. Click save to add them as devices. Now comes the tricky part.
+Open it and click "Connect to Netatmo". You will be prompted by a Netatmo login. Use your developer account to log in and give permission to access the welcome and presence scope by clicking "yes". Tap "done" to continue. The screen will now confirm that Netatmo is connected to SmartThings.
+
+![app2](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_2.png)
+![app3](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_3.png)
+![app4](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_4.png)
+![app5](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_5.png)
+![app6](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_6.png)
+
+Click next to enter the preferences and add the devices and people you want to have monitored. Click save to add them as devices. 
+
+![app7](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_7.png)
+![app8](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_8.png)
+![app9](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_9.png)
+
+Enable the webhook (explained later):
+![app10](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_10.png)
+
+Click save. A popup should say "Successfully added Netatmo Security".
+
+![app11](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_11.png)
+
+You should now see devices (present and welcome) and people show up as devices, depending on what you have activated in the smartapp preferences:
+
+![app12](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_12.png)
+![app13](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_13.png)
+
+ A presence camera:
+![app14](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_14.png)
+From top left to bottom right: a "take" button for snapshots, motion indicator, camera on/off indicator, human detected, car detected, pet detected, home name. 
+
+A welcome camera:
+![app15](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_15.png)
+From top left to bottom right: a "take" button for snapshots, motion indicator, camera on/off indicator, home name, mark everyone as being away. 
+
+A person presence device:
+![app16](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_16.png)
+From top left to bottom right: presence indicator, home name, mark this person as being away.
+
+Now comes the hard part.
+
 
 ## Connecting the cameras for image snapshots
 
-In the preferences for each camera, there is a local ip and access key setting. It is easier to set this up via the IDE, so go there and open the my devices screen. Click on your camera device, and then click the preferences edit link. In a separate browser tab go to https://dev.netatmo.com and sign in.At the top of the screen there should be a link "our resources". Go there and click References > Cameras > Gethomedata. To the right click the arrow at "Try this method by yourself with our TRY IT module.". Then click "try it". You will see a server response, expand the result to "body > homes > cameras". Expand each camera and look at the "name" property to find the ones you installed in SmartThings. There should be a property "vpn_url" that looks something like "https://v1.netatmo.net/restricted/someip/somelongstring/anotherlongstring".
+In the preferences for each camera, there is a local ip and access key setting. It is easier to set this up via the IDE, so go there and open the my devices screen. Click on your camera device, and then click the preferences edit link. In a separate browser tab go to https://dev.netatmo.com and sign in.At the top of the screen there should be a link "our resources". Go there and click References > Cameras > Gethomedata. 
+
+![app11](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_11.png)
+
+
+To the right click the arrow at "Try this method by yourself with our TRY IT module.". Then click "try it". You will see a server response, expand the result to "body > homes > cameras". Expand each camera and look at the "name" property to find the ones you installed in SmartThings. There should be a property "vpn_url" that looks something like "https://v1.netatmo.net/restricted/someip/somelongstring/anotherlongstring".
 
 Copy the "somelongstring" part (so the first bit after the ip address) and paste it into the device preference "camera secret" via the IDE (this would be hard to to in the app). Now you need to find the actual ip address for your camera(s), for instance via your router. Enter that ip address in the "camera ip" setting. Keep in mind that the Welcome cameras can be connected via cable or wireless so they have 2 mac addresses. The Netatmo dev try it module shows the cable mac address as the device id. 
 
