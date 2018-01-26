@@ -76,32 +76,40 @@ Open it and click "Connect to Netatmo". You will be prompted by a Netatmo login.
 
 Click next to enter the preferences and add the devices and people you want to have monitored. Click save to add them as devices. 
 
-![app7](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_7.png)
-![app8](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_8.png)
-![app9](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_9.png)
+<table>
+<tr>
+<td><img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_7.png" width="200"></td>
+<td><img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_8.png" width="200"></td>
+<td><img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_9.png" width="200"></td>
+</tr>
+<table>
 
 Enable the webhook (explained later):
-![app10](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_10.png)
+<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_10.png" width="200">
 
 Click save. A popup should say "Successfully added Netatmo Security".
 
-![app11](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_11.png)
+<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_11.png" width="200">
 
 You should now see devices (present and welcome) and people show up as devices, depending on what you have activated in the smartapp preferences:
 
-![app12](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_12.png)
-![app13](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_13.png)
-
+<table>
+<tr>
+<td><img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_12.png" width="200"></td>
+<td><img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_13.png" width="200"></td>
+</tr>
+<table>
+ 
  A presence camera:
-![app14](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_14.png)
+<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_14.png" width="200">
 From top left to bottom right: a "take" button for snapshots, motion indicator, camera on/off indicator, human detected, car detected, pet detected, home name. 
 
 A welcome camera:
-![app15](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_15.png)
+<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_15.png" width="200">
 From top left to bottom right: a "take" button for snapshots, motion indicator, camera on/off indicator, home name, mark everyone as being away. 
 
 A person presence device:
-![app16](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_16.png)
+<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_16.png" width="200">
 From top left to bottom right: presence indicator, home name, mark this person as being away.
 
 Note that for the camera's theres no images yet. Now comes the hard part.
@@ -111,7 +119,7 @@ Note that for the camera's theres no images yet. Now comes the hard part.
 
 Snapshots can only be taken when we have the IP address and a netatmo secret key for the cameras. In the preferences for each camera, there is a local ip and access key setting. 
 
-![app18](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_18.png)
+<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_18.png" width="200">
 
 It is easier to set this up via the IDE, so go there and open the my devices screen. Click on your camera device:
 
@@ -157,10 +165,10 @@ Please note that Netatmo is very strict about the webhook. If there are 5 failed
 Both camera type preferences have a setting for the ip address and secret. Since the webhook does not report when motion ends, you need to specify the timeout in the preferences for both camera types. Both types can also be setup to take a snapshot at certain intervals. The presence camera also has the option to link human, pet or car detection to the motion detector, so you could say that a car passing by also counts as motion.
 
 Welcome camera preferences:
-![app18](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_18.png)
+<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_18.png" width="200">
 
 Presence camera preferences:
-![app19](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_19.png)
+<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_19.png" width="200">
 
 
 
