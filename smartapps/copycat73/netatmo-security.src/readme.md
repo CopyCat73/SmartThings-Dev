@@ -62,11 +62,17 @@ In the SmartThings app, go to Automation, SmartApps. Click "+ add a SmartApp" an
 
 Open it and click "Connect to Netatmo". You will be prompted by a Netatmo login. Use your developer account to log in and give permission to access the welcome and presence scope by clicking "yes". Tap "done" to continue. The screen will now confirm that Netatmo is connected to SmartThings.
 
-<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_2.png" width="200">
-<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_3.png" width="200">
-<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_4.png" width="200">
-<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_5.png" width="200">
-<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_6.png" width="200">
+<table>
+<tr>
+<td>1: <img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_2.png" width="200"></td>
+<td>2: <img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_3.png" width="200"></td>
+<td>3: <img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_4.png" width="200"></td>
+</tr>
+<tr>
+<td>4: <img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_5.png" width="200"></td>
+<td>5: <img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_6.png" width="200"></td>
+</tr>
+<table>
 
 Click next to enter the preferences and add the devices and people you want to have monitored. Click save to add them as devices. 
 
