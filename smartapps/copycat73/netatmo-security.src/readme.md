@@ -62,11 +62,11 @@ In the SmartThings app, go to Automation, SmartApps. Click "+ add a SmartApp" an
 
 Open it and click "Connect to Netatmo". You will be prompted by a Netatmo login. Use your developer account to log in and give permission to access the welcome and presence scope by clicking "yes". Tap "done" to continue. The screen will now confirm that Netatmo is connected to SmartThings.
 
-![app2](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_2.png)
-![app3](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_3.png)
-![app4](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_4.png)
-![app5](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_5.png)
-![app6](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_6.png)
+<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_2.png" width="200">
+<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_3.png" width="200">
+<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_4.png" width="200">
+<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_5.png" width="200">
+<img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_6.png" width="200">
 
 Click next to enter the preferences and add the devices and people you want to have monitored. Click save to add them as devices. 
 
