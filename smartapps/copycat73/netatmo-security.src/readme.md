@@ -56,7 +56,7 @@ Enable oAuth and under the app settings provide the client id and secret you rec
 
 ## Install the SmartApp
 
-In the SmartThings app, go to Automation, SmartApps. Click "+ add a SmartApp" and into "My Apps". Netatmo Security should be listed there:
+In the SmartThings app, go to Automation, SmartApps. Click "+ add a SmartApp" and go into "My Apps". Netatmo Security should be listed there:
 
 <img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_1.png" width="200">
 
@@ -85,6 +85,7 @@ Click next to enter the preferences and add the devices and people you want to h
 <table>
 
 Enable the webhook (explained later):
+
 <img src="https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_10.png" width="200">
 
 Click save. A popup should say "Successfully added Netatmo Security".
