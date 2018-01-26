@@ -34,7 +34,7 @@ and paste the code from:
 
 https://raw.githubusercontent.com/CopyCat73/SmartThings-Dev/master/smartapps/copycat73/netatmo-security.src/netatmo-security.groovy
 
-Create the Device Type Handlers in the same way:
+Create the Device Type Handlers in the same way (under "my device type handlers"):
 
 Netatmo Person: https://raw.githubusercontent.com/CopyCat73/SmartThings-Dev/master/devicetypes/copycat73/netatmo-person.src/netatmo-person.groovy
 
@@ -107,7 +107,15 @@ Snapshots can only be taken when we have the IP address and a netatmo secret key
 
 ![app18](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/app_18.png)
 
-It is easier to set this up via the IDE, so go there and open the my devices screen. Click on your camera device, and then click the preferences edit link. In a separate browser tab go to https://dev.netatmo.com and sign in.At the top of the screen there should be a link "our resources". Go there and click References > Cameras > Gethomedata. 
+It is easier to set this up via the IDE, so go there and open the my devices screen. Click on your camera device:
+
+![deviceprefs1](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/device_prefs_1.png)
+
+and then click the preferences edit link.
+
+![deviceprefs2](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/device_prefs_2.png)
+
+In a separate browser tab go to https://dev.netatmo.com and sign in.At the top of the screen there should be a link "our resources". Go there and click References > Cameras > Gethomedata. 
 
 ![gethomedata_1](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/gethomedata_1.png)
 
@@ -120,7 +128,13 @@ Expand each camera and look at the "name" property to find the ones you installe
 
 ![gethomedata_4](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/gethomedata_4.png)
 
-Copy the red underlined part (so the first bit after the ip address, watch the slashes!) and paste it into the device preference "camera secret" via the IDE (this would be hard to to in the app). Now you need to find the actual ip address for your camera(s), for instance via your router. Enter that ip address in the "camera ip" setting. Keep in mind that the Welcome cameras can be connected via cable or wireless so they have 2 mac addresses. The Netatmo dev try it module shows the cable mac address as the device id. 
+Copy the red underlined part (so the first bit after the ip address, watch the slashes!) and paste it into the device preference "camera secret" via the IDE (this would be hard to to in the app). 
+
+![deviceprefs3](https://raw.githubusercontent.com/CopyCat73/CopyCat73.github.io/master/device_prefs_3.png)
+
+Now you need to find the actual ip address for your camera(s), for instance via your router. Enter that ip address in the "camera ip" setting as seen above.
+
+Keep in mind that the Welcome cameras can be connected via cable or wireless so they have 2 mac addresses. The Netatmo dev try it module shows the cable mac address as the device id. 
 
 You should now be able to go into an installed camera in the smartthings app and take a snapshot from the camera.
 
