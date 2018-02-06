@@ -746,19 +746,29 @@ def poll() {
 	
 	settings.devices.each { deviceId ->
 		def data = state?.deviceState[deviceId]
-  		def child = children?.find { it.deviceNetworkId == deviceId }
-  		child?.sendEvent(name: 'switch', value: data['status'], unit: "")
+        if (data) {
+            def child = children?.find { it.deviceNetworkId == deviceId }
+            child?.sendEvent(name: 'switch', value: data['status'], unit: "")
+        }
+        else {
+			log.debug "poll error for switch $deviceId"
+		}
     }
 
  	settings.people.each { personId ->
 		def detail = state?.personDetail[personId]
-    	def child = children?.find { it.deviceNetworkId == personId }
-  		if (detail['out_of_sight']) {
-	    	child?.away()
-        }
+    	if (detail) {
+            def child = children?.find { it.deviceNetworkId == personId }
+            if (detail['out_of_sight']) {
+                child?.away()
+            }
+            else {
+                //log.debug "device $child"
+                child?.seen()
+            }
+    	}
         else {
-        	log.debug "device $child"
-        	child?.seen()
+        	log.debug "poll error for person $personId"
         }
     }   
     
