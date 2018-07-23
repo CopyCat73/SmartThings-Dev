@@ -36,32 +36,32 @@ metadata {
     preferences {
 	    section ("Settings") {
 			input name:"deviceIP", type:"text", title:"P1 Monitor IP address", required: true
+            input name:"showGas", type:"bool", title:"Show gas measurement", required: true
          }
 	}
 
-	tiles(scale: 2) {
-    	// You might want to change the values and colors in the main tile to your own wattage and liking. This can't be set by preferences.
-        
-        multiAttributeTile(name:"power", type:"generic", width:6, height:4) {
-            tileAttribute("device.power", key: "PRIMARY_CONTROL") {
-                attributeState "level", label:'${currentValue} W', defaultState: true, backgroundColors:[
+	// You might want to change the values and colors in the power tile to your own wattage and liking. This can't be set by preferences.
+	tiles(scale: 1) {
+    	valueTile("power", "device.power", width: 3, height: 3) {
+    		state("level", label:'${currentValue} W', unit:"W", 
+        		backgroundColors:[
                     [value: 0, color: "#44b621"],
                     [value: 1000, color: "#f1d801"],
                     [value: 2000, color: "#bc2323"]
-                ]
-            }
-            tileAttribute ("device.displayCombined", key: "SECONDARY_CONTROL") {
-                attributeState "level", label:'${currentValue}', icon: "st.Appliances.appliances17"
-            }
+       			]
+        	)
+      	}
+		valueTile("displayCombined", "device.displayCombined", width: 2, height: 1, inactiveLabel: false) {
+            state "level", label:'${currentValue}'
         }
-        standardTile("refresh", "device.refresh", width: 2, height: 2, inactiveLabel: false, decoration: "flat") {
+        standardTile("refresh", "device.refresh", width: 1, height: 1, inactiveLabel: false, decoration: "flat") {
  			state "default", action:"refresh.refresh", icon:"st.secondary.refresh"
  		}  
-  		valueTile("lastupdate", "lastupdate", width: 4, height: 2, inactiveLabel: false) { 			
+  		valueTile("lastupdate", "lastupdate", width: 3, height: 1, inactiveLabel: false) { 			
           state "default", label:"Last updated: " + '${currentValue}' 		
-		}                  
+		}  
         main (["power"])
- 		details(["power","energy", "lastupdate", "refresh"])
+ 		details(["power","displayCombined", "lastupdate", "refresh"])        
 	}
 
 }
@@ -121,7 +121,7 @@ def poll() {
         null,
         [callback : parse] 
     )
-    log.debug ("hubaction" + hubAction)
+    //log.debug ("hubaction" + hubAction)
     //hubAction this does not work with runEveryXMinutes
     sendHubCommand(hubAction)
 }
@@ -137,7 +137,11 @@ def parse(physicalgraph.device.HubResponse hubResponse) {
     def returnEnergyKwhValue = json.GELVR_KWH_SUM
     def powerWattValue = json.ACT_W_VERBR
     def returnWattValue = json.ACT_W_GELVR
-    def displayCombined = "Return: ${returnWattValue} W Energy: ${energyKwhValue} kWh\nReturned energy: ${returnEnergyKwhValue} kWh"
+    def gas = json.VERBR_GAS
+    def displayCombined = "Return: ${returnWattValue} W\nEnergy: ${energyKwhValue} kWh\nReturned energy: ${returnEnergyKwhValue} kWh"
+    if (showGas) {
+    	displayCombined = displayCombined + "\nGas: ${gas}"
+    }
     log.debug "received values $powerWattValue $displayCombined"
     
     sendEvent([name: "energy", value: energyKwhValue, unit: "kWh"])
