@@ -137,13 +137,17 @@ def parse(physicalgraph.device.HubResponse hubResponse) {
     def returnEnergyKwhValue = json.GELVR_KWH_SUM
     def powerWattValue = json.ACT_W_VERBR
     def returnWattValue = json.ACT_W_GELVR
-    def gas = json.VERBR_GAS
-    def displayCombined = "Return: ${returnWattValue} W\nEnergy: ${energyKwhValue} kWh\nReturned energy: ${returnEnergyKwhValue} kWh"
+    def gas = json.VERBR_GAS.toInteger()
+    //def displayCombined = "Return: ${returnWattValue} W\nEnergy: ${energyKwhValue} kWh\nReturned energy: ${returnEnergyKwhValue} kWh"
+    def displayCombined = "Energy used: ${energyKwhValue} kWh\nEnergy returned: ${returnEnergyKwhValue} kWh"
     if (showGas) {
-    	displayCombined = displayCombined + "\nGas: ${gas}"
+    	displayCombined = displayCombined + "\nGas used: ${gas}"
     }
     log.debug "received values $powerWattValue $displayCombined"
-    
+
+    if (powerWattValue == 0 && returnWattValue > 0) {
+    	powerWattValue = returnWattValue * -1
+    }
     sendEvent([name: "energy", value: energyKwhValue, unit: "kWh"])
     sendEvent([name: "returnEnergy", value: returnEnergyKwhValue, unit: "kWh"])
     sendEvent([name: "power", value: powerWattValue, unit: "W"])
