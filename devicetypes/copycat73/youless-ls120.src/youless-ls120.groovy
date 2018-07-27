@@ -17,22 +17,22 @@ metadata {
 	definition (name: "Youless LS120", namespace: "CopyCat73", author: "Nick Veenstra") {
 		capability "Energy Meter"
 		capability "Power Meter"
-        capability "Refresh"
+		capability "Refresh"
 
 		attribute "lastupdate", "string"
-        attribute "p1", "number"
+		attribute "p1", "number"
 		attribute "s0", "number"
 	}
     
     simulator {
-    	//TBD
+		//TBD
 	}
     
     preferences {
 	    section ("Settings") {
-			input name: "deviceIP", type:"text", title:"Youless IP address", required: true
+            input name: "deviceIP", type:"text", title:"Youless IP address", required: true
             input name: "mainInfo", type: "enum", title: "Value to show on the main tile", options: ["0": "P1 data", "1": "S0 data", "2": "P1-S0"], description: "Select option", required: true      
-			input name: "nameP1", type:"text", title:"P1 wording", required: true
+            input name: "nameP1", type:"text", title:"P1 wording", required: true
             input name: "nameS0", type:"text", title:"S0 wording", required: true
          }
 	}
@@ -128,7 +128,7 @@ def parse(response) {
 	
     //log.debug "Parsing '${response}'"
     def json = response.json
-	log.debug "Received '${json}'"
+	//log.debug "Received '${json}'"
     def kwhValue = json.cnt
     def p1Value = json.pwr.toInteger()
     def s0Value = json.ps0.toInteger()
