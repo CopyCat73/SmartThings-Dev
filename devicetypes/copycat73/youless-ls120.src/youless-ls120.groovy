@@ -31,7 +31,7 @@ metadata {
     preferences {
 	    section ("Settings") {
             input name: "deviceIP", type:"text", title:"Youless IP address", required: true
-            input name: "mainInfo", type: "enum", title: "Value to show on the main tile", options: ["0": "P1 data", "1": "S0 data", "2": "P1-S0"], description: "Select option", required: true      
+            input name: "mainInfo", type: "enum", title: "Value to show on the main tile", options: ["0": "P1 data", "1": "S0 data", "2": "P1+S0 (actual usage)"], description: "Select option", required: true      
             input name: "nameP1", type:"text", title:"P1 wording", required: true
             input name: "nameS0", type:"text", title:"S0 wording", required: true
          }
@@ -132,7 +132,7 @@ def parse(response) {
     def kwhValue = json.cnt
     def p1Value = json.pwr.toInteger()
     def s0Value = json.ps0.toInteger()
-    def netValue = p1Value - s0Value
+    def netValue = p1Value + s0Value
     def combinedValue = nameP1 + ": " + p1Value + " W " + nameS0 + ": " + s0Value + " W\nTotal: " + kwhValue + " kWh"
     
     def powerValue
