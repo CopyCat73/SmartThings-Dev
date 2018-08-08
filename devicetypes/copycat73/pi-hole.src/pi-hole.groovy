@@ -115,9 +115,9 @@ def poll() {
 
 def parse(response) {
 	
-    log.debug "Parsing '${response}'"
+    //log.debug "Parsing '${response}'"
     def json = response.json
-	log.debug "Received '${json}'"
+	//log.debug "Received '${json}'"
     if (json.FTLnotrunning) {
     	return
     }
@@ -137,12 +137,10 @@ def parse(response) {
 }
 
 def on() {
-  	log.debug "turning on"
-  	doSwitch("enable")
+	doSwitch("enable")
 }
 
 def off() {
-  	log.debug "turning off"
 	doSwitch("disable")
 }
 
