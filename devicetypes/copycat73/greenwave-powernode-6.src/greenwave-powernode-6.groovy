@@ -173,6 +173,12 @@ def updated() {
 	log.debug "updated()"
 }
 
+
+def initialize() {
+	unschedule()
+	runEvery5Minutes(pollNodes)
+}
+
 def createChildDevices() {
     log.debug "creating child devices"
         
